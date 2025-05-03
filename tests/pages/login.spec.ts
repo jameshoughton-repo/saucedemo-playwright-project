@@ -5,7 +5,8 @@ import { LoginPage } from './login-page';
 const validUsername = 'standard_user'; 
 const validPassword = 'secret_sauce';
 const lockedUsername = 'error_user';
-const invalidPassword = 'test';
+const invalidPassword = 'test_password';
+const unknownUsername = 'test_user';
 
 // test setup
 test.beforeEach(async ({ page }) => {
@@ -27,3 +28,10 @@ test('test login | locked user', async ({ page }) => {
     await loginPage.login(lockedUsername,invalidPassword);
     await loginPage.checkedLockedUser();
   });
+
+// login with unknown user account 
+test('test login | unknown user', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.login(unknownUsername,invalidPassword);
+    await loginPage.checkedUnknownUser();
+});

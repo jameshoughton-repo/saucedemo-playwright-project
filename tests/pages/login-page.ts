@@ -29,7 +29,11 @@ export class LoginPage {
     }
 
     async checkedLockedUser() {
-        await expect(this.page.locator('[data-test="error"]')).toBeVisible();
+        await expect(this.page.locator('[data-test="error"]')).toHaveText('Epic sadface: Sorry, this user has been locked out.');
+    }
+
+    async checkedUnknownUser() {
+        await expect(this.page.locator('[data-test="error"]')).toHaveText('Epic sadface: Username and password do not match any user in this service');
     }
 
 }
