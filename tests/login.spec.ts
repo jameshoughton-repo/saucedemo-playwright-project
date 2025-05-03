@@ -1,10 +1,10 @@
 import { test } from '@playwright/test';
-import { LoginPage } from './login-page';
+import { LoginPage } from './pages/login-page';
 
 // test data 
 const validUsername = 'standard_user'; 
 const validPassword = 'secret_sauce';
-const lockedUsername = 'error_user';
+const lockedUsername = 'locked_out_user';
 const invalidPassword = 'test_password';
 const unknownUsername = 'test_user';
 
@@ -25,7 +25,7 @@ test('test login | standard user', async ({ page }) => {
 // login with locked user account 
 test('test login | locked user', async ({ page }) => {
     const loginPage = new LoginPage(page);
-    await loginPage.login(lockedUsername,invalidPassword);
+    await loginPage.login(lockedUsername,validPassword);
     await loginPage.checkedLockedUser();
   });
 
