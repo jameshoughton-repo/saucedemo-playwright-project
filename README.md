@@ -11,9 +11,11 @@ This project is a **test automation framework** for the Swag Labs demo e-commerc
 
 ## Setup
 ### Prerequisites
-Requires playwright in order to run the tests
+Requires playwright in order to run the tests.
 ```
 npm init playwright@latest
 ```
 ### Hompage
+With login workflow and user access.
+
 <img width="600" align='left' alt="image" src="https://github.com/user-attachments/assets/5b70d4f3-ca23-49bf-9168-0c6f159d48ee" />
