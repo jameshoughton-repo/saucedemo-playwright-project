@@ -25,4 +25,5 @@ test('test login | standard user', async ({ page }) => {
 test('test login | locked user', async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.login(lockedUsername,invalidPassword);
+    await loginPage.checkedLockedUser();
   });

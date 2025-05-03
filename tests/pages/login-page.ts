@@ -28,4 +28,8 @@ export class LoginPage {
         await expect(this.page).toHaveURL('https://www.saucedemo.com/inventory.html');
     }
 
+    async checkedLockedUser() {
+        await expect(this.page.locator('[data-test="error"]')).toBeVisible();
+    }
+
 }
