@@ -42,3 +42,19 @@ test('remove product from cart', async ({ page }) => {
     const cartCount = await productsPage.getCartCount();
     test.expect(cartCount).toBe(0);
 });
+
+//Sort products be price test (low to high)
+test('sort products by price', async ({ page }) => {
+    const productsPage = new ProductsPage(page);
+    await productsPage.sortBy('Price (low to high)');
+    // Additional assertions to verify sorting can be added here
+    test.expect(await productsPage.sortDropdown().inputValue()).toBe('lohi');
+});
+
+//Sort products by name test (Z to A)
+test('sort products by name', async ({ page }) => {
+    const productsPage = new ProductsPage(page);
+    await productsPage.sortBy('Name (Z to A)');
+    // Additional assertions to verify sorting can be added here
+    test.expect(await productsPage.sortDropdown().inputValue()).toBe('za');
+});
