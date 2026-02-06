@@ -16,7 +16,7 @@ export class ProductsPage {
     await this.page.goto('https://www.saucedemo.com/inventory.html');
   }
 
-  // Internal helper: tests don’t need this directly
+  //Internal helper: tests don’t need this directly
   private slug(itemName: string): string {
     return itemName
       .toLowerCase()
@@ -24,7 +24,7 @@ export class ProductsPage {
       .replace(/(^-|-$)/g, '');
   }
 
-  // Locator builders (sync)
+  //Locator builders (sync)
   addButton(itemName: string): Locator {
     return this.page.locator(`[data-test="add-to-cart-${this.slug(itemName)}"]`);
   }
@@ -33,7 +33,11 @@ export class ProductsPage {
     return this.page.locator(`[data-test="remove-${this.slug(itemName)}"]`);
   }
 
-  // Action methods (async)
+  sortDropdown(): Locator {
+    return this.page.locator('.product_sort_container');
+  }
+
+  //Action methods (async)
   async addItem(itemName: string) {
     await this.addButton(itemName).click();
     await expect(this.removeButton(itemName)).toBeVisible();
@@ -54,5 +58,9 @@ export class ProductsPage {
       return parseInt(await this.cartBadge.innerText(), 10);
     }
     return 0;
+  }
+
+  async sortBy(option: string) {
+    await this.sortDropdown().selectOption({ label: option });
   }
 }
