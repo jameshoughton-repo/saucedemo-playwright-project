@@ -10,8 +10,7 @@ export class LoginPage {
         this.page = page;
         this.enterUsername = page.getByPlaceholder('Username');
         this.enterPassword = page.getByPlaceholder('Password');
-        this.loginButton = page.locator('[data-test="login-button"]');
-        
+        this.loginButton = page.getByRole('button', { name: 'Login' });
     }
 
     async navigateTo() {
