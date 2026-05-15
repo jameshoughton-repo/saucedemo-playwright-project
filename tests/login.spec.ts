@@ -1,47 +1,24 @@
 import { test } from '@playwright/test';
 import { LoginPage } from './pages/login-page';
 
-// test data organised in an object for better maintainability
-const validUser = {
-    username: 'standard_user',
-    password: 'secret_sauce'
-};
+type State = 'loggedIn' | 'lockedUser' | 'unknownUser';
 
-const lockedUser = {
-    username: 'locked_out_user',
-    password: 'secret_sauce'
-};
-
-const unknownUser = {
-    username: 'test_user',
-    password: 'test_password'
-};  
+const loginCases: { username: string; password: string; expectedOutcome: State }[] = [
+  { username: 'standard_user',   password: 'secret_sauce', expectedOutcome: 'loggedIn' },
+  { username: 'locked_out_user', password: 'secret_sauce', expectedOutcome: 'lockedUser' },
+  { username: 'test_user',       password: 'test_password', expectedOutcome: 'unknownUser' },
+];
 
 
-// test setup
-test.beforeEach(async ({ page }) => {
-  const loginPage = new LoginPage(page);
-  await loginPage.navigateTo();
-}) 
-
-// login with standard user account 
-test('test login | standard user', async ({ page }) => {
-  const loginPage = new LoginPage(page);
-  await loginPage.login(validUser.username,validUser.password);
-  await loginPage.checkedLoggedIn();
-
-});
-
-// login with locked user account 
-test('test login | locked user', async ({ page }) => {
+// loop through the test cases and execute the login test for each set of credentials
+for (const tc of loginCases) {
+  test(`Login test for ${tc.username}`, async ({ page }) => {
     const loginPage = new LoginPage(page);
-    await loginPage.login(lockedUser.username,lockedUser.password);
-    await loginPage.checkedLockedUser();
+    await loginPage.navigateTo();
+    await loginPage.login(tc.username, tc.password);
+    // assert the expected outcome of logged in state 
+    await loginPage.assertOutcome(tc.expectedOutcome);
   });
+}
 
-// login with unknown user account 
-test('test login | unknown user', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    await loginPage.login(unknownUser.username,unknownUser.password);
-    await loginPage.checkedUnknownUser();
-});
+
